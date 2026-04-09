@@ -11,7 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "sdkVersion": "51.0.0",
+    "sdkVersion": "54.0.0",
     "ios": {
       "bundleIdentifier": "com.yourcompany.yourappname",
       "infoPlist": {
@@ -23,7 +23,9 @@
       "permissions": [
         "CAMERA"
       ]
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
-   

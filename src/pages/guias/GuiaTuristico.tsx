@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, TextInput, Image, Alert, ScrollView, Pressable, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 import styles from '../guias/StyleGuia';
 import { useNavigation } from '@react-navigation/native';
 import firebaseService from '../../services/firebaseService'; 

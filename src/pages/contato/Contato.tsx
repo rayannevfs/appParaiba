@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import {Text, TextInput, View,  Alert, TouchableOpacity, ScrollView,Linking, Pressable } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import { SimpleLineIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from "../contato/StyleContato";
 

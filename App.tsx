@@ -10,8 +10,9 @@ import Home from './src/pages/home/Home';
 import CadastrarGuia from './src/pages/guias/GuiaTuristico';
 import PerfilDoGuia from './src/pages/guias/PerfilDoGuia';
 
+const Stack = createNativeStackNavigator();
+
 const App = () => {
-  const Stack = createNativeStackNavigator();
   const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
@@ -47,14 +48,13 @@ const App = () => {
     <View style={{flex:1}} onLayout={onLayout}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen  options={{ headerShown: false }} name="Home" component={Home}/>
-          <Stack.Screen  options={{ headerShown: false }} name="Cadastrar Guia" component={CadastrarGuia}/>
-          <Stack.Screen  options={{ headerShown: false }} name="UserProfile" component={PerfilDoGuia}/>
+          <Stack.Screen options={{ headerShown: false }} name="Home" component={Home}/>
+          <Stack.Screen options={{ headerShown: false }} name="Cadastrar Guia" component={CadastrarGuia}/>
+          <Stack.Screen options={{ headerShown: false }} name="UserProfile" component={PerfilDoGuia}/>
         </Stack.Navigator>
       </NavigationContainer>
     </View>
   )
-
 };
 
 export default App;

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, Alert, ScrollView, ActivityIndicator, TouchableOpacity, Linking, Button } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import styles from '../guias/StylePerfilGuia';
 import firebaseService from '../../services/firebaseService';
 import { auth } from '../../../firebase.config';

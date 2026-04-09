@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, Image, FlatList, Modal, Pressable } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import firebaseService from "../../services/firebaseService";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from "./StylePassaporte";

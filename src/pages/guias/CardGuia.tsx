@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Linking, Image, Dimensions } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import styles from '../guias/StyleCardGuia';
 
 const GuiaCard: React.FC<{ userData: any }> = ({ userData }) => {
