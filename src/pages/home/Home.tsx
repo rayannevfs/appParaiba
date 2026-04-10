@@ -4,13 +4,12 @@ import MapView, { Marker, Region } from 'react-native-maps';
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
-import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from "./StylesHome";
 import firebaseService from "../../services/firebaseService";
 import Roteiro from "../roteiro/Roteiro";
 import PassaporteVirtual from "../passaporte/PassaporteVirtual";
 import Contato from "../contato/Contato";
-import ListaGuiasScreen from "../guias/ListaDeGuias";
 import GaleriaMapa from "../galeriaHome/GaleriaMap";
 
 const initialRegion: Region = {
@@ -40,8 +39,7 @@ const Home: React.FC = () => {
   const scrollViewRef = useRef<ScrollView>(null);
   const [isPassportModalVisible, setPassportModalVisible] = useState(false);
   const [isContactModalVisible, setContactModalVisible] = useState(false);
-  const [isListGuidesModalVisible, setListGuidesModalVisible] = useState(false);
-  const [videoUrl, setVideoUrl] = useState('https://www.youtube.com/embed/IeHx1YgZGLg?autoplay=1&loop=1&playlist=IeHx1YgZGLg');
+  const [videoUrl, setVideoUrl] = useState('https://youtu.be/gXd55owzZ1M');
   const shadowAnim = useRef(new Animated.Value(0)).current;
   const rotationAnim = useRef(new Animated.Value(0)).current; 
   const translateXAnim1 = useRef(new Animated.Value(0)).current;
@@ -86,7 +84,7 @@ const Home: React.FC = () => {
         mapRef.current.animateToRegion(initialRegion, 800);
       }
       setVideoUrl(
-        "https://www.youtube.com/embed/IeHx1YgZGLg?autoplay=1&loop=1&playlist=IeHx1YgZGLg&controls=1&showinfo=0&rel=0"
+        "https://youtu.be/gXd55owzZ1M"
       );
     }
 
@@ -158,15 +156,6 @@ const Home: React.FC = () => {
 
   const handleCloseContactModal = () => {
     setContactModalVisible(false);
-    resetMapRegion();
-  };
-
-  const handleOpenListGuidesModal = () => {
-    setListGuidesModalVisible(true);
-  };
-
-  const handleCloseListGuidesModal = () => {
-    setListGuidesModalVisible(false);
     resetMapRegion();
   };
 
@@ -298,10 +287,6 @@ const Home: React.FC = () => {
           <MaterialCommunityIcons name="passport" size={30} color="#000" />
           <Text style={styles.textBar}>Passaporte</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton} onPress={handleOpenListGuidesModal}>
-          <MaterialIcons name="person-search" size={30} color="#000" />
-          <Text style={styles.textBar}>Guias</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.iconButton}  onPress={handleOpenContactModal}>
           <MaterialCommunityIcons name="message-question-outline" size={30} color="#000" />
           <Text style={styles.textBar}>Contato</Text>
@@ -320,12 +305,6 @@ const Home: React.FC = () => {
       <Modal visible={isContactModalVisible} animationType="slide" transparent={true} onRequestClose={handleCloseContactModal} >
         <Contato />
         <TouchableOpacity style={styles.closeModalButton2} onPress={handleCloseContactModal}>
-          <Text style={styles.closeModalText}>Fechar</Text>
-        </TouchableOpacity>
-      </Modal>
-      <Modal visible={isListGuidesModalVisible} animationType="slide" transparent={true} onRequestClose={handleCloseListGuidesModal} >
-        <ListaGuiasScreen />
-        <TouchableOpacity style={styles.closeModalButton2} onPress={handleCloseListGuidesModal}>
           <Text style={styles.closeModalText}>Fechar</Text>
         </TouchableOpacity>
       </Modal>

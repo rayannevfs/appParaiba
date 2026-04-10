@@ -4,12 +4,12 @@ import { getFirestore } from 'firebase/firestore/lite';
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDl6DY6-7kovW_MNxwM0J8Dm3rtiQQzrIE",
-    authDomain: "appparaibe-se.firebaseapp.com",
-    projectId: "appparaibe-se",
-    storageBucket: "appparaibe-se.appspot.com",
-    messagingSenderId: "150689283014",
-    appId: "1:150689283014:web:5a568f2f8673fb37a110c7"
+    apiKey: "AIzaSyD_9Gk-_FIJ62px_BNs12MSX-kLgi9suy4",
+    authDomain: "appparaibe-se-27b9a.firebaseapp.com",
+    projectId: "appparaibe-se-27b9a",
+    storageBucket: "appparaibe-se-27b9a.firebasestorage.app",
+    messagingSenderId: "81600759865",
+    appId: "1:81600759865:web:ec0a4b88dc388ace69a5e8"
 };
 
 const app = initializeApp(firebaseConfig);

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, Modal, ScrollView, Text, TouchableOpacity, View, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Modal, ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Camera, CameraView } from "expo-camera";
 import styles from './StyleGaleriaR';
 import firebaseService from '../../services/firebaseService';
 
@@ -9,9 +8,6 @@ const GaleriaRoteiro: React.FC<{ cidade: string | null }> = ({ cidade }) => {
     if (!cidade) return null;
 
     const [confirmarCheckListVisible, setConfirmarChecklistVisible] = useState(false);
-    const [qrCodeScannerVisible, setQrCodeScannerVisible] = useState(false);
-    const [hasPermission, setHasPermission] = useState<boolean>(false);
-    const [scanned, setScanned] = useState(false);
     const [stampInfo, setStampInfo] = useState({
         cidade: '',
         nome: '',
@@ -54,66 +50,29 @@ const GaleriaRoteiro: React.FC<{ cidade: string | null }> = ({ cidade }) => {
     };
 
     const handleConfirmarVisita = async () => {
-        const { status } = await Camera.requestCameraPermissionsAsync();
-        if (status === 'granted') {
-            setConfirmarChecklistVisible(false);
-            setQrCodeScannerVisible(true);
-        } else {
-            Alert.alert('Aviso', 'Permissão para usar a câmera foi negada.');
-        }
-    };
-
-    useEffect(() => {
-        const getCameraPermissions = async () => {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setHasPermission(status === 'granted');
-        };
-
-        getCameraPermissions();
-    }, []);
- 
-    const handleBarCodeScanned = async ({ data }: any) => {
-        setScanned(true);
-        if (data === stampInfo.qrCode) {
+        try {
+            const stampData = {
+                cidade: stampInfo.cidade,
+                nome: stampInfo.nome,
+                historia: stampInfo.historia,
+                data: stampInfo.data,
+                hora: stampInfo.hora,
+                latitude: stampInfo.latitude,
+                longitude: stampInfo.longitude,
+                url: stampInfo.url,
+                qrCode: stampInfo.qrCode,
+            };
+            await firebaseService.saveStamp(stampData);
             Alert.alert("Check-in salvo com sucesso!");
-            setQrCodeScannerVisible(false);
             setConfirmarChecklistVisible(false);
-
-            try {
-                const stampData = {
-                    cidade: stampInfo.cidade,
-                    nome: stampInfo.nome,
-                    historia: stampInfo.historia,
-                    data: stampInfo.data,
-                    hora: stampInfo.hora,
-                    latitude: stampInfo.latitude,
-                    longitude: stampInfo.longitude,
-                    url: stampInfo.url,
-                    qrCode: stampInfo.qrCode,
-                };
-                await firebaseService.saveStamp(stampData);
-            } catch (error) {
-                console.error('Error saving stamp to Firestore:', error);
-            }
-        } else {
-            Alert.alert("Erro", "O QR code escaneado não corresponde ao local selecionado.");
-            setQrCodeScannerVisible(false);
+        } catch (error) {
+            console.error('Erro ao salvar check-in:', error);
+            Alert.alert("Erro", "Não foi possível salvar o check-in.");
         }
     };
-
-    if (hasPermission === null) {
-        return <Text>Requesting for camera permission</Text>;
-    }
-    if (hasPermission === false) {
-        return <Text>No access to camera</Text>;
-    }
 
     const handleFecharModalConfirmarChecklist = () => {
         setConfirmarChecklistVisible(false);
-    };
-
-    const handleCloseCamera = () => {
-        setQrCodeScannerVisible(false);
     };
 
     const chunkArray = (array: any, chunkSize: number) => {
@@ -234,27 +193,6 @@ const GaleriaRoteiro: React.FC<{ cidade: string | null }> = ({ cidade }) => {
                         </View>
                     </View>
                 </View>
-            </Modal>
-            <Modal animationType="fade" transparent={true} visible={qrCodeScannerVisible} onRequestClose={handleCloseCamera}>
-                {qrCodeScannerVisible && (
-                    <>
-                        <CameraView
-                            onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-                            barcodeScannerSettings={{
-                                barcodeTypes: ["qr", "pdf417"],
-                            }}
-                            style={StyleSheet.absoluteFillObject}
-                        />
-                           <TouchableOpacity style={styles.closeButtonContainer} onPress={handleCloseCamera}>
-                            <Text style={styles.closeButtonText}> Fechar </Text>
-                          </TouchableOpacity>
-                    </>
-                )}
-               {scanned && (
-                            <TouchableOpacity  style={styles.scanAgainContainer} onPress={() => setScanned(false)}>
-                                <Text style={styles.scanText}> Tap to Scan Again </Text>
-                            </TouchableOpacity>
-                        )}
             </Modal>
         </SafeAreaView>
     );
